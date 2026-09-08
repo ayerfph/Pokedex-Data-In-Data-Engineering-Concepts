@@ -1,5 +1,5 @@
 import requests
- 
+
 def get_pokemon_generation(gen):
     """
     Hello Welcome to the code! My goal of this project is to explore getting data
