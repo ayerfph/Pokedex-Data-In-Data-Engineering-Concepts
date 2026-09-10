@@ -1,4 +1,5 @@
 import requests
+import pandas as pd
 
 def get_pokemon_generation(gen):
     """
@@ -29,9 +30,9 @@ gen = "1"
 pokedex_info = get_pokemon_generation(gen)
 
 if pokedex_info:
-    print("Pokémon from generation 1:") # Title ref
+    pokemon_list = []
 
-    # Getting the data 
+    # Getting the data
     for pokemon in pokedex_info["pokemon_species"]:
         pokemon_response = requests.get(
             f"https://pokeapi.co/api/v2/pokemon/{pokemon['name']}"
@@ -47,10 +48,19 @@ if pokedex_info:
             for ability in pokemon_data["abilities"]
         )
 
+        pokemon_list.append({
+            "Name": pokemon_data["name"].title(),
+            "ID": pokemon_data["id"],
+            "Type": types,
+            "Abilities": abilities,
+        })
         print(
             f"Name: {pokemon_data['name'].title()}\n"
             f"ID: {pokemon_data['id']}\n"
             f"Type: {types}\n"
             f"Abilities: {abilities}\n"
         )
+    pokemon_df = pd.DataFrame(pokemon_list)
+    pokemon_df.to_csv("pokemon-generation-1.csv", index=False)
+    print("Pokémon data saved to pokemon-generation-1.csv")
         
