@@ -1,5 +1,6 @@
 import requests
- 
+import pandas as pd
+
 def get_pokemon_info(gen):
 
     """
@@ -56,3 +57,8 @@ if pokedex_info:
             f"No. {pokemon_id}\n"
             f"Description: {description}\n"
         )
+
+    pokemon_df = pd.DataFrame(
+        rows, columns=["pokemon_id", "name", "description"]
+    )
+    pokemon_df.to_csv("pokemon-info.csv", index=False)
